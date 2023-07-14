@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+
+<body>
+
+  <script>
+    // start with strings, numbers and booleans
+    let num = 1;
+    let num2 = num;
+    console.log(num, num2);
+
+    num2 = 3;
+    console.log(num, num2);
+    // Let's say we have an array
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // and we want to make a copy of it.
+    const players2 = players;
+    console.log(players, players2);
+    // players2[2] = 'CHANGED';
+
+    // console.log("Original Array : ", players);
+    // console.log("Copied Array : ", players2);
+
+    // players[1] = 'CHANGED 2';
+    // console.log("Original Array : ", players);
+    // console.log("Copied Array : ", players2);
+    // You might think we can just do something like this:
+
+    // const players3 = players.slice();
+    // players3[2] = 'CHANGED 3';
+    // console.log("Original Array : ", players);
+    // console.log("Copied Array : ", players3);
+
+    // const players4 = [...players];
+    // players4[3] = "CHANGED 4";
+
+    // console.log("Original Array : ", players);
+    // console.log("Copied Array : ", players4);
+
+    // const players5 = Array.from(players);
+    // players5[3] = "CHANGED 5";
+
+    // console.log("Original Array : ", players);
+    // console.log("Copied Array : ", players5);
+
+    // however what happens when we update that array?
+
+    // now here is the problem!
+
+    // oh no - we have edited the original array too!
+
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+    // So, how do we fix this? We take a copy instead!
+
+    // one way
+
+    // or create a new array and concat the old one in
+
+    // or use the new ES6 Spread
+
+    // now when we update it, the original one isn't changed
+
+    // The same thing goes for objects, let's say we have a person object
+
+    // with Objects
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+
+    // const person2 = person;
+    // person2.name = 'CHANGED NAME';
+    // console.log(person, person2);
+
+    // const person3 = { ...person };
+    // person3.name = 'CHANGED 3';
+    // console.log(person, person3);
+
+    // const person4 = Object.assign({}, person, { number: 33 });
+    // console.log(person, person4);
+
+    const obj = {
+      name: 'ABCD',
+      address: {
+        city: "New York",
+        country: 'USA'
+      }
+    }
+    // const obj1 = Object.assign({}, obj);
+    // const obj1 = { ...obj };
+    // obj1.name = 'EFGH';
+    // console.log('Name Changed : ', obj1, obj);
+    // obj1.address.city = 'Boston';
+    // console.log('City Changed : ', obj1, obj);
+
+
+
+
+    const obj1 = JSON.parse(JSON.stringify(obj));
+    obj1.name = 'EFGH';
+    console.log('Name Changed : ', obj1, obj);
+    obj1.address.city = 'Boston';
+    console.log('City Changed : ', obj1, obj);
+  </script>
+
+</body>
+
+</html>
