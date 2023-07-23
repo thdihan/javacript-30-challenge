@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Whack A Mole!</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+
+<body>
+
+  <h1>Whack-a-mole! <span class="score">0</span></h1>
+  <button class="start-button" onClick="startGame()">Start!</button>
+
+  <div class="game">
+    <div class="hole hole1">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole2">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole3">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole4">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole5">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole6">
+      <div class="mole"></div>
+    </div>
+  </div>
+
+  <script>
+
+    const scoreBoard = document.querySelector('.score');
+    const holes = document.querySelectorAll('.hole');
+    const moles = document.querySelectorAll('.mole');
+
+    let prevHole = -1;
+    let timeUp = false;
+    let score;
+    function randomTime(min, max) {
+      const time = Math.round(Math.random() * (max - min) + min);
+      return time;
+    }
+
+    function randomHole(holes) {
+      const hole = Math.floor(Math.random() * holes.length);
+      if (hole === prevHole) {
+        return randomHole(holes);
+      }
+
+      prevHole = hole;
+      return holes[hole];
+    }
+
+    function gameRun() {
+      const time = randomTime(200, 2000);
+      const hole = randomHole(holes);
+
+      hole.classList.add('up');
+      setTimeout(() => {
+        hole.classList.remove('up');
+        if (!timeUp)
+          gameRun();
+      }, time);
+      // console.log(time, hole);
+    }
+
+    function startGame() {
+      gameRun();
+      timeUp = false;
+      score = 0;
+      scoreBoard.textContent = score;
+      setTimeout(() => {
+        timeUp = true;
+      }, 10000);
+    }
+
+    function scoreUpdate() {
+      score++;
+      scoreBoard.textContent = score;
+      console.log(this.parentNode);
+      this.parentNode.classList.remove('up');
+    }
+    moles.forEach(mole => mole.addEventListener('click', scoreUpdate));
+  </script>
+</body>
+
+</html>
